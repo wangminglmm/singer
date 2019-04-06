@@ -1,0 +1,4 @@
+$rootfontsize: 50;
+@function torem($num){
+  @return $num / $rootfontsize + rem;
+}
