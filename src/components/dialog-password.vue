@@ -20,9 +20,14 @@
 <script>
 import Button from '@/components/Button'
 export default {
+  props: {
+    title: {
+      type: String,
+      default: '设置密码'
+    }
+  },
   data() {
     return {
-      title: '设置密码',
       isShow: false,
       value: '',
       numberList: [],

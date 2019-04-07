@@ -17,11 +17,11 @@ export default {
 @import '../assets/css/variable.scss';
 .avatar{
   position: relative;
-  width: torem(150);
-  height: torem(150);
-  &.avatar-buyer{
-    width: torem(136);
-    height: torem(136);
+  width: torem(136);
+  height: torem(136);
+  &.avatar-seller{
+    width: torem(150);
+    height: torem(150);
   }
   .img{
     width: 100%;

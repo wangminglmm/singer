@@ -13,6 +13,7 @@
         background="transparent"
         input-align="center"
         shape="round"
+        ref="input"
         @search="onSearch"
         @input="onInput"
         />
@@ -64,6 +65,8 @@ export default {
   created() {
     this.deLoad = debounce(this.onLoad, 1000)
     this.from = this.$route.query.from
+  },
+  mouted() {
   },
   methods: {
     ...mapMutations(

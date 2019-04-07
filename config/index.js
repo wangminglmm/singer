@@ -10,7 +10,11 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/activities': {
+        target: 'http://ppapp.tshang.com'
+      }
+    },
 
     // Various Dev Server settings
     host: '192.168.0.102', // can be overwritten by process.env.HOST

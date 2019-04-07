@@ -179,7 +179,7 @@ export default {
         currentPublishType: this.currentPublishType,
         ...this.postFormData
       }
-      if (!data.selectedSong.id) {
+      if (!data.selectedSong.songId) {
         return this.$toast('请选择歌曲')
       }
       if (this.currentPublishType === 'private' && !data.password) {

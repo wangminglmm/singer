@@ -11,6 +11,14 @@ Vue.config.productionTip = false
 import './assets/css/base.css'
 import 'vant/lib/index.css'
 Vue.use(Vant)
+import {queryParams} from './utils/index'
+saveToken() // 页面初始化把用户信息保存在sessionStorage
+function saveToken() {
+  let tokenObj = queryParams(location.href)
+  if (tokenObj['u']) {
+    sessionStorage.setItem('token', JSON.stringify(tokenObj))
+  }
+}
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

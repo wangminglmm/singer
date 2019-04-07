@@ -16,15 +16,23 @@
       </div>
       <div class="btn-rule" @click="showRule=true">活动规则</div>
     </section>
-    <section class="list">
-      <home-list-item
-      v-for="(item, index) in list"
-      :key="index"
-      :taskInfo="item"
-      class="list-item"
-      ></home-list-item>
-    </section>
-    <div class="circle-button">我的领唱</div>
+    <van-list
+        v-model="loading"
+        :finished="finished"
+        @load="onLoad"
+        :immediate-check="false"
+        :offset="100"
+      >
+      <section class="list">
+        <home-list-item
+        v-for="(item, index) in list"
+        :key="index"
+        :taskInfo="item"
+        class="list-item"
+        ></home-list-item>
+      </section>
+    </van-list>
+    <div class="circle-button" @click="handToLeadRecord">我的领唱</div>
     <van-popup
       overlay-class="popup-rule"
       v-model="showRule"
@@ -44,16 +52,26 @@
 import Button from '@/components/Button'
 import HomeListItem from '@/components/home-list-item'
 import {res} from '@/mock/home'
+console.log(res)
 export default {
   data() {
     return {
       list: [],
-      showRule: false
+      showRule: false,
+      loading: false,
+      finished: false,
+      page: 1,
+      pageTotal: 0,
     }
+  },
+  created() {
+    this.getData()
   },
   mounted() {
     this.timer = setInterval(() => {
-      this.getData()
+      this.list.forEach(item => {
+        item.remainTime--
+      })
     }, 1000)
   },
   beforeDestory() {
@@ -62,19 +80,36 @@ export default {
   methods: {
     getData() {
       // todo 发送请求获取接口数据
-      let list = res.list
-      this.list = list.map(item => {
-        return {
-          ...item,
-          remainTime: --item.remainTime
+      this.loading = true
+      this.$http.get('/activities/XmasTree17/load', {
+        params: {
+          page: this.page
         }
+      }).then((res) => {
+        console.log(res)
       })
+      // 这里成功后执行
+      setTimeout(() => {
+        let data = res
+        this.list = this.list.concat(data.list)
+        this.pageTotal = data.pageTotal
+        this.loading = false
+        if (this.pageTotal <= this.page) {
+          this.finished = true
+        }
+      }, 400);
+    },
+    onLoad() {
+      this.page++
+      this.getData()
     },
     onClickLeft() {
 
     },
     onClickRight() {
-
+      this.$router.push({
+        path: '/reward-record'
+      })
     },
     handlePublish() {
       this.$router.push('/publish')
@@ -85,6 +120,11 @@ export default {
         query: {
           from: 'myLeadSinger'
         }
+      })
+    },
+    handToLeadRecord() {
+      this.$router.push({
+        path: '/lead-record'
       })
     }
   },

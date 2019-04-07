@@ -5,6 +5,8 @@ const Join = () => import('@/pages/join')
 const Publish = () => import('@/pages/publish')
 const SelectSong = () => import('@/pages/select-song')
 const SearchSong = () => import('@/pages/search-song')
+const LeadRecord = () => import('@/pages/lead-record')
+const RewardRecord = () => import('@/pages/reward-record')
 Vue.use(Router)
 
 export default new Router({
@@ -33,6 +35,16 @@ export default new Router({
       path: '/search-song',
       name: 'SearchSong',
       component: SearchSong
+    },
+    {
+      path: '/lead-record',
+      name: 'LeadRecord',
+      component: LeadRecord
+    },
+    {
+      path: '/reward-record',
+      name: 'RewardRecord',
+      component: RewardRecord
     }
   ]
 })

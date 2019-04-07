@@ -89,5 +89,7 @@ export const res = {
       needsPassword: true, // 是否需要密码
       taskId: 2233, // 任务id，验证密码用该id
     }
-  ]
+  ],
+  page: 1,
+  pageTotal: 5, //总页数，用做分页
 }
