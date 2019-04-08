@@ -4,6 +4,8 @@
       <div class="left">
         <Avatar
           :imgUrl="taskInfo.seller.avatarUrl"
+          :uid="taskInfo.seller.uid"
+          :nickName="taskInfo.seller.nickName"
           type="seller"
         />
         <div class="seller-info">
@@ -18,6 +20,8 @@
       >
         <Avatar
           :imgUrl="taskInfo.leader.avatarUrl"
+          :uid="taskInfo.leader.uid"
+          :nickName="taskInfo.leader.nickName"
           type="buyer"
         />
         <div class="buyer-info">

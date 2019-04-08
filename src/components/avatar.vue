@@ -1,15 +1,30 @@
 <template>
   <div class="avatar" :class="[`avatar-${type}`]">
-    <img :src="imgUrl" alt="" class="img">
+    <img :src="imgUrl" alt="" class="img" @click="showDialogAvatar">
     <span class="seller" v-if="type=='seller'">赏主</span>
     <span class="buyer" v-if="type=='buyer'">领唱人</span>
+    <dialog-avatar
+      :imgUrl="imgUrl"
+      :uid="uid"
+      ref="dialogAvatar"></dialog-avatar>
   </div>
 </template>
 <script>
+import DialogAvatar from './dialog-avatar'
 export default {
   props: {
     imgUrl: String,
-    type: String
+    type: String,
+    uid: String,
+    nickName: String
+  },
+  components: {
+    DialogAvatar
+  },
+  methods: {
+    showDialogAvatar() {
+      this.$refs.dialogAvatar.show()
+    }
   }
 }
 </script>
@@ -50,14 +65,4 @@ export default {
   }
 }
 </style>
-
-.圆角矩形_8 {
-  background-color: rgb(255, 236, 73);
-  position: absolute;
-  left: 545px;
-  top: 1370px;
-  width: 80px;
-  height: 42px;
-  z-index: 58;
-}
 

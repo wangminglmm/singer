@@ -25,6 +25,8 @@
             <div class="left">
               <Avatar
                 :imgUrl="taskInfo.seller.avatarUrl"
+                :uid="taskInfo.seller.uid"
+                :nickName="taskInfo.seller.nickName"
                 type="seller"
               />
               <div class="seller-info">
@@ -39,6 +41,8 @@
             >
               <Avatar
                 :imgUrl="taskInfo.leader.avatarUrl"
+                :uid="taskInfo.leader.uid"
+                :nickName="taskInfo.leader.nickName"
                 type="buyer"
               />
               <div class="buyer-info">
@@ -91,7 +95,10 @@
               class="top"
               v-if="taskInfo.leader"
             >
-              <Avatar :imgUrl="taskInfo.leader.avatarUrl" />
+              <Avatar
+              :imgUrl="taskInfo.leader.avatarUrl"
+              :uid="taskInfo.leader.uid"
+              :nickName="taskInfo.leader.nickName" />
               <div class="buyer-info">
                 <div class="buyer-name">当前领唱人：{{taskInfo.leader.nickName}}</div>
                 <div class="score">领唱评分：{{taskInfo.leader.score}}</div>

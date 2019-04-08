@@ -13,6 +13,7 @@
           <input type="number" class="input" maxlength="4" v-model="value" ref="input" id="pwd">
         </label>
         <Button type="publish" class="sure-btn" @click="handlePublish">确定</Button>
+        <div class="close" @click="isShow=false"><img src="../assets/images/icon-close.png" alt=""></div>
       </div>
     </van-popup>
   </div>
@@ -117,6 +118,14 @@ export default {
     height: torem(78);
     line-height: torem(78);
     margin: 0 auto;
+  }
+  .close{
+    position: absolute;
+    width: torem(54);
+    height: torem(54);
+    left: 50%;
+    bottom: torem(-100);
+    margin-left: torem(-27);
   }
 }
 .van-popup{
