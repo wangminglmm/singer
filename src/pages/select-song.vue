@@ -177,11 +177,15 @@ export default {
         
         this.$http.get('/sing/select?type='+type, {}).then((res) => {
           console.log(res)
+          console.log('发送请求')
+          setTimeout(() => {
           resolve({
             data:res,
             pageTotal: 1
           })
+
         })
+        }, 2000)
       })
     },
     findByType(type) {

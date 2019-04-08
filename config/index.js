@@ -12,13 +12,21 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/sing': {
+<<<<<<< HEAD
         target: 'http://192.168.0.100'
+=======
+        target: 'http://ppapp.tshang.com'
+>>>>>>> 69c72b75e1e73045e3cbfce212d7eb8b4349afdf
       }
     },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
+<<<<<<< HEAD
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+=======
+    port: 8081, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+>>>>>>> 69c72b75e1e73045e3cbfce212d7eb8b4349afdf
     autoOpenBrowser: false,
     errorOverlay: true,
     notifyOnErrors: true,

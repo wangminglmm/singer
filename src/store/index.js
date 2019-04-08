@@ -4,8 +4,11 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     userInfo: { // 用户信息
-      sex: 1,
-      nickName: '王明'
+      sex: '',
+      nickName: '',
+      u: '',
+      p: '',
+      v: '',
     },
     privateSelectedSong: {},
     publicSelectedSong: {},
@@ -54,6 +57,11 @@ const store = new Vuex.Store({
       state.publicSelectedSong = {},
       state.currentPublishType = 'public',
       state.publishPasswrod = ''
+    },
+    setUserInfo(state, obj = {}) {
+      Object.keys(obj).forEach(key => {
+        state.userInfo[key] = obj[key]
+      })
     }
   },
   getters: {

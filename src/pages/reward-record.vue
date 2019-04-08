@@ -34,6 +34,8 @@
                 <div class="left">
                   <Avatar
                     :imgUrl="item.seller.avatarUrl"
+                    :uid="item.seller.uid"
+                    :nickName="item.seller.nickName"
                     type="seller"
                   />
                   <div class="seller-info">
@@ -48,6 +50,8 @@
                 >
                   <Avatar
                     :imgUrl="item.leader.avatarUrl"
+                    :uid="item.leader.uid"
+                    :nickName="item.leader.nickName"
                     type="buyer"
                   />
                   <div class="buyer-info">
@@ -72,7 +76,10 @@
                   v-for="joiner in item.joinerList"
                   :key="joiner.uid"
                 >
-                  <Avatar :imgUrl="joiner.avatarUrl" />
+                  <Avatar
+                    :imgUrl="joiner.avatarUrl"
+                    :uid="joiner.uid"
+                    :nickName="joiner.nickName" />
                   <div class="joiner-detail">
                     <div class="nick-name">{{joiner.nickName}}</div>
                     <button-play
@@ -118,6 +125,8 @@
                   <div class="left">
                     <Avatar
                       :imgUrl="item.seller.avatarUrl"
+                      :uid="item.seller.uid"
+                      :nickName="item.seller.nickName"
                       type="seller"
                     />
                     <div class="seller-info">
@@ -132,6 +141,8 @@
                   >
                     <Avatar
                       :imgUrl="item.leader.avatarUrl"
+                      :uid="item.leader.uid"
+                      :nickName="item.leader.nickName"
                       type="buyer"
                     />
                     <div class="buyer-info">
@@ -156,7 +167,10 @@
                     v-for="joiner in item.joinerList"
                     :key="joiner.uid"
                   >
-                    <Avatar :imgUrl="joiner.avatarUrl" />
+                    <Avatar
+                    :imgUrl="joiner.avatarUrl"
+                    :uid="joiner.uid"
+                    :nickName="joiner.nickName" />
                     <div class="joiner-detail">
                       <div class="nick-name">{{joiner.nickName}}</div>
                       <button-play

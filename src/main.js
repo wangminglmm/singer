@@ -6,6 +6,8 @@ import router from './router'
 import Plugin from './utils/index'
 import store from './store/index'
 import Vant from 'vant'
+import {initJsBridge} from './utils/jsBridge'
+initJsBridge()
 Vue.use(Plugin)
 Vue.config.productionTip = false
 import './assets/css/base.css'
@@ -16,6 +18,7 @@ saveToken() // 页面初始化把用户信息保存在sessionStorage
 function saveToken() {
   let tokenObj = queryParams(location.href)
   if (tokenObj['u']) {
+    store.commit('setUserInfo', tokenObj)
     sessionStorage.setItem('token', JSON.stringify(tokenObj))
   }
 }
