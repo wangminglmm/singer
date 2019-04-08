@@ -1,8 +1,9 @@
 import axios from 'axios'
+import qs from 'qs';
 const TIMEOUT = 40000
 const service = axios.create({
   timeout: TIMEOUT,
-  // headers: { 'format': 'JSON' }
+  headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 })
 // 把每个请求链接拼接参数
 service.interceptors.request.use(function(config) {
@@ -12,6 +13,7 @@ service.interceptors.request.use(function(config) {
   config.params.u = queryObj.u || ''
   config.params.p = queryObj.p || ''
   config.params.v = queryObj.v || ''
+  config.data = qs.stringify(config.data)
   return config
 })
 service.interceptors.response.use(function(res) {

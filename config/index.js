@@ -11,7 +11,7 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/activities': {
+      '/sing': {
         target: 'http://ppapp.tshang.com'
       }
     },

@@ -172,12 +172,13 @@ export default {
         })
       }
       return new Promise((resolve, reject) => {
+        console.log('发送请求')
         setTimeout(() => {
           resolve({
             data,
             pageTotal: 3
           })
-        }, 1000)
+        }, 2000)
       })
     },
     findByType(type) {
