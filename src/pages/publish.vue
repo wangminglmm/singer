@@ -175,11 +175,11 @@ export default {
     },
     handlePublish() {
       let data = {
-        selectedSong: this.selectedSong,
+        songId: this.selectedSong.songId,
         currentPublishType: this.currentPublishType,
         ...this.postFormData
       }
-      if (!data.selectedSong.songId) {
+      if (!data.songId) {
         return this.$toast('请选择歌曲')
       }
       if (this.currentPublishType === 'private' && !data.password) {
@@ -192,6 +192,9 @@ export default {
         forbidClick: true, // 禁用背景点击
         loadingType: 'spinner',
         message: '发布中...'
+      })
+      this.$http.post('/sing/create', data).then((res) => {
+        console.log(res)
       })
       setTimeout(() => {
         toast.clear()

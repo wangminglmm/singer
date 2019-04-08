@@ -3,6 +3,7 @@ const TIMEOUT = 40000
 const service = axios.create({
   timeout: TIMEOUT,
   // headers: { 'format': 'JSON' }
+  headers: { 'Content-Type': 'application/x-www-form-urlencoded'}
 })
 // 把每个请求链接拼接参数
 service.interceptors.request.use(function(config) {

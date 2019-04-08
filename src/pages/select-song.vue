@@ -74,7 +74,7 @@ export default {
       songList: [
         {
           title: '热门推荐',
-          type: 10,
+          type: 1,
           loading: false,
           finished: false,
           page: 1,
@@ -82,7 +82,7 @@ export default {
         },
         {
           title: '抖音神曲',
-          type: 20,
+          type: 2,
           loading: false,
           finished: false,
           page: 1,
@@ -90,7 +90,7 @@ export default {
         },
         {
           title: 'KTV麦榜',
-          type: 30,
+          type: 3,
           loading: false,
           finished: false,
           page: 1,
@@ -98,7 +98,7 @@ export default {
         },
         {
           title: '粤语金曲',
-          type: 40,
+          type: 4,
           loading: false,
           finished: false,
           page: 1,
@@ -106,7 +106,7 @@ export default {
         },
         {
           title: '经典老歌',
-          type: 50,
+          type: 5,
           loading: false,
           finished: false,
           page: 1,
@@ -152,6 +152,7 @@ export default {
       let {type, page} = obj
       let item = this.findByType(type)
       let res = await this.getData(type, page)
+      
       console.log(res)
       item.list.push(...res.data)
       item.loading = false
@@ -172,12 +173,15 @@ export default {
         })
       }
       return new Promise((resolve, reject) => {
-        setTimeout(() => {
+        console.log(data);
+        
+        this.$http.get('/sing/select?type='+type, {}).then((res) => {
+          console.log(res)
           resolve({
-            data,
-            pageTotal: 3
+            data:res,
+            pageTotal: 1
           })
-        }, 1000)
+        })
       })
     },
     findByType(type) {
