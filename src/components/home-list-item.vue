@@ -112,7 +112,10 @@ export default {
     },
     handlePlayMusic(taskInfo) {
       // todo 这里调用原生播放音乐
-      alert("这里调用原生播放音乐");
+      let url = '/static/app/sing/upload/'+this.taskInfo.leaderMusic;
+      console.log(url)
+      playVoice(this.userInfo.p,url);
+      //alert("这里调用原生播放音乐");
     },
     handlePasswordSuccess(password) {
       // todo 接口验证密码是否正确

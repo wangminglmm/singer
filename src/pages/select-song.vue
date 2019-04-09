@@ -176,16 +176,14 @@ export default {
         console.log(data);
         
         this.$http.get('/sing/select?type='+type, {}).then((res) => {
-          console.log(res)
-          console.log('发送请求')
-          setTimeout(() => {
+          if(res.error_code){
+            return this.$toast(res.msg)
+          }
           resolve({
-            data:res,
+            data:res.data,
             pageTotal: 1
           })
-
         })
-        }, 2000)
       })
     },
     findByType(type) {

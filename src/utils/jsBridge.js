@@ -22,7 +22,54 @@ function to_personal (device, uid) {
 	}
 }
 
+//播放录音
+function playVoice(device,voice_url){
+	if(device == 'ios'){
+		showPlayVoice_ios(voice_url);
+	}else{
+		showPlayVoice(voice_url);
+	}
+}
+
+//录音
+function Voice(device,content, act){
+	if(device == 'ios'){
+		showVoice_ios(content, act);
+	}else{
+		showVoice(content, act);
+	}
+}
+
+//显示Android录音
+function showVoice(content, act){
+	//content = "每人只有一次上传机会，上传前请确认";
+	var url = "pp://voice";
+	var str = "{'url':'"+url+"','act':'"+act+"','content':'"+content+"'}";
+	window.peipeiinjs.runPeiPeiJavaScript(str);//通过injs接口调用android的函数
+}
+//显示Android播放录音
+function showPlayVoice(voice_url){
+	var url = "pp://play_voice";
+	var str = "{'url':'"+url+"','voice_url':'"+voice_url+"'}";
+	window.peipeiinjs.runPeiPeiJavaScript(str);//通过injs接口调用android的函数
+}
+
+//显示IOS录音
+function showVoice_ios(content, act){
+	//content, act=hsy
+	window.location.href =  "pp://voice?content="+content+"&act="+act+"";
+
+}
+//显示IOS播放录音
+function showPlayVoice_ios(voice_url){
+
+	window.location.href = "pp://play_voice?voice_url="+voice_url;
+
+}
+
 export function initJsBridge() {
   window.showMyHome = showMyHome
-  window.to_personal = to_personal
+	window.to_personal = to_personal
+	window.Voice = Voice
+  window.playVoice = playVoice
 }

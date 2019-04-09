@@ -81,23 +81,20 @@ export default {
     getData() {
       // todo 发送请求获取接口数据
       this.loading = true
-      this.$http.get('/activities/XmasTree17/load', {
+      this.$http.get('/sing/list', {
         params: {
           page: this.page
         }
       }).then((res) => {
-        console.log(res)
-      })
-      // 这里成功后执行
-      setTimeout(() => {
-        let data = res
+        console.log(res.data)
+        let data = res.data
         this.list = this.list.concat(data.list)
         this.pageTotal = data.pageTotal
         this.loading = false
         if (this.pageTotal <= this.page) {
           this.finished = true
         }
-      }, 400);
+      })
     },
     onLoad() {
       this.page++

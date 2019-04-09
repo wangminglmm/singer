@@ -176,7 +176,7 @@ export default {
     handlePublish() {
       let data = {
         songId: this.selectedSong.songId,
-        currentPublishType: this.currentPublishType,
+        type: this.tabModel,
         ...this.postFormData
       }
       if (!data.songId) {
@@ -194,12 +194,14 @@ export default {
         message: '发布中...'
       })
       this.$http.post('/sing/create', data).then((res) => {
-        console.log(res)
+        this.$toast(res.msg);
+        if(res.error_code == 0){
+          setTimeout(() => {
+            toast.clear()
+            this.onClickLeft() // 成功后调用
+          }, 1000)
+        }
       })
-      setTimeout(() => {
-        toast.clear()
-        this.onClickLeft() // 成功后调用
-      }, 1000)
     },
     handleSelectSong() {
       this.$router.push('/select-song')
