@@ -9,11 +9,13 @@
     <div id="app"></div>
     <script src="https://as.alipayobjects.com/g/component/fastclick/1.0.6/fastclick.js"></script>
     <script>
+      /*
       if ('addEventListener' in document) {
         document.addEventListener('DOMContentLoaded', function() {
           FastClick.attach(document.body);
         }, false);
       }
+      */
       if(!window.Promise) {
         document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"'+'>'+'<'+'/'+'script>');
       }
@@ -21,3 +23,7 @@
     <!-- built files will be auto injected -->
   </body>
 </html>
+<script type="text/javascript" src="//wechatfe.github.io/vconsole/lib/vconsole.min.js?v=3.0.0.0"></script>
+<script type="text/javascript">
+  window.vConsole = new window.VConsole();
+</script>

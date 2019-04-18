@@ -104,6 +104,12 @@ export default {
       if (this.disabled) {
         return this.$toast("条件不符合，请换一个试试吧！");
       }
+      let taskId = this.taskInfo.taskId;
+      this.$http.get('/sing/checkJoin?id='+taskId).then((res) => {
+        if(res.error_code != 0){
+          return this.$toast(res.msg);
+        }
+      })
       if (this.taskInfo.needsPassword) {
         this.$refs.dialogPassword.show();
       } else {
@@ -112,7 +118,7 @@ export default {
     },
     handlePlayMusic(taskInfo) {
       // todo 这里调用原生播放音乐
-      let url = '/static/app/sing/upload/'+this.taskInfo.leaderMusic;
+      let url = this.taskInfo.leaderMusic;
       console.log(url)
       playVoice(this.userInfo.p,url);
       //alert("这里调用原生播放音乐");
@@ -120,12 +126,14 @@ export default {
     handlePasswordSuccess(password) {
       // todo 接口验证密码是否正确
       let taskId = this.taskInfo.taskId;
-      if (password == 1234) {
-        this.$refs.dialogPassword.hide();
-        this.toJoin();
-      } else {
-        this.$toast("密码错误，测试密码1234");
-      }
+      this.$http.get('/sing/checkPwd?id='+taskId+'&pwd='+password).then((res) => {
+        if (res.error_code == 0) {
+          this.$refs.dialogPassword.hide();
+          this.toJoin();
+        } else {
+          this.$toast(res.msg);
+        }
+      })
     },
     toJoin() {
       this.$router.push({

@@ -105,10 +105,13 @@ export default {
         })
       }
       return new Promise((resolve, reject) => {
-        setTimeout(() => {
+        this.$http.get('/sing/search?keyword='+value,{}).then((res) => {
           resolve({
-            data
+            data:res.data
           })
+        });
+        setTimeout(() => {
+          
         }, 1000)
       })
     },

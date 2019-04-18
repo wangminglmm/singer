@@ -90,8 +90,8 @@
                     ></button-play>
                     <div
                       class="joiner-status"
-                      :class="{failed: joiner.status == 1}"
-                    >{{joiner.status == 1 ? '接唱失败' : '接唱成功'}}</div>
+                      :class="{failed: joiner.status == 0}"
+                    >{{joiner.status == 0 ? '接唱失败' : '接唱成功'}}</div>
                   </div>
                 </div>
               </div>
@@ -181,8 +181,8 @@
                       ></button-play>
                       <div
                         class="joiner-status"
-                        :class="{failed: joiner.status == 1}"
-                      >{{joiner.status == 1 ? '接唱失败' : '接唱成功'}}</div>
+                        :class="{failed: joiner.status == 0}"
+                      >{{joiner.status == 0 ? '接唱失败' : '接唱成功'}}</div>
                     </div>
                   </div>
                 </div>
@@ -209,155 +209,52 @@
 <script>
 import Avatar from "@/components/avatar";
 import ButtonPlay from "@/components/button-play";
+import {mapGetters} from 'vuex';
 export default {
   data() {
     return {
       title: "打赏记录",
       tabModel: 1,
       publish: {
-        list: [
-          {
-            songName: "绿色",
-            songAuthor: "陈雪凝",
-            lyricList: [
-              "说不痛苦那是假的，毕竟我的心也是肉做的",
-              "你离开时我心里的彩虹，就变成灰色"
-            ],
-            songId: 1,
-            seller: {
-              // 发布者
-              avatarUrl: require("../assets/images/avatar.png"),
-              nickName: "王明",
-              uid: "10000" // 用户的id
-            },
-            grade: "演唱成功奖励演唱成功奖励200金币200金币",
-            leader: {
-              // 领唱人
-              avatarUrl: require("../assets/images/avatar.png"),
-              nickName: "小郑",
-              uid: "10001", // 用户的id
-              score: 95
-            },
-            leaderMusic: "这里是音乐链接",
-            remainTime: 0, // 剩余时间秒
-            remainGold: 300,
-            allowSex: 1, // 0女 1男 2不限
-            needsPassword: false, // 是否需要密码
-            taskId: 2233, // 任务id，验证密码用该id
-            joinerList: [
-              {
-                uid: "19993",
-                nickName: "小郑",
-                avatarUrl: require("../assets/images/avatar.png"),
-                score: 99,
-                musicUrl: "参加人的音乐链接",
-                status: 1 // 参加状态，0成功， 1失败
-              },
-              {
-                uid: "1993",
-                nickName: "小郑",
-                avatarUrl: require("../assets/images/avatar.png"),
-                score: 99,
-                musicUrl: "参加人的音乐链接",
-                status: 0 // 参加状态，0成功， 1失败
-              }
-            ]
-          },
-          {
-            songName: "绿色",
-            songAuthor: "陈雪凝",
-            lyricList: [
-              "说不痛苦那是假的，毕竟我的心也是肉做的",
-              "你离开时我心里的彩虹，就变成灰色"
-            ],
-            songId: 1,
-            seller: {
-              // 发布者
-              avatarUrl: require("../assets/images/avatar.png"),
-              nickName: "王明",
-              uid: "10000" // 用户的id
-            },
-            grade: "演唱成功奖励演唱成功奖励200金币200金币",
-            leader: {
-              // 领唱人
-              avatarUrl: require("../assets/images/avatar.png"),
-              nickName: "小郑",
-              uid: "10001", // 用户的id
-              score: 95
-            },
-            leaderMusic: "这里是音乐链接",
-            remainTime: 1000, // 剩余时间秒
-            remainGold: 300,
-            allowSex: 1, // 0女 1男 2不限
-            needsPassword: false, // 是否需要密码
-            taskId: 2233, // 任务id，验证密码用该id
-            joinerList: [
-              {
-                uid: "1993",
-                nickName: "小郑",
-                avatarUrl: require("../assets/images/avatar.png"),
-                score: 99,
-                musicUrl: "参加人的音乐链接",
-                status: 1 // 参加状态，0成功， 1失败
-              }
-            ]
-          }
-        ]
+        list: []
       },
       participate: {
-        list: [
-          {
-            songName: "绿色",
-            songAuthor: "陈雪凝",
-            lyricList: [
-              "说不痛苦那是假的，毕竟我的心也是肉做的",
-              "你离开时我心里的彩虹，就变成灰色"
-            ],
-            songId: 1,
-            seller: {
-              // 发布者
-              avatarUrl: require("../assets/images/avatar.png"),
-              nickName: "王明",
-              uid: "10000" // 用户的id
-            },
-            grade: "演唱成功奖励演唱成功奖励200金币200金币",
-            leader: {
-              // 领唱人
-              avatarUrl: require("../assets/images/avatar.png"),
-              nickName: "小郑",
-              uid: "10001", // 用户的id
-              score: 95
-            },
-            leaderMusic: "这里是音乐链接",
-            remainTime: 0, // 剩余时间秒
-            remainGold: 300,
-            allowSex: 1, // 0女 1男 2不限
-            needsPassword: false, // 是否需要密码
-            taskId: 2233, // 任务id，验证密码用该id
-            joinerList: [
-              {
-                uid: "19993",
-                nickName: "小郑",
-                avatarUrl: require("../assets/images/avatar.png"),
-                score: 99,
-                musicUrl: "参加人的音乐链接",
-                status: 1 // 参加状态，0成功， 1失败
-              }
-            ]
-          },
-        ]
+        list: []
       }
     };
   },
-  created() {},
-  computed: {},
+  created() {
+    this.getData()
+  },
+  computed: {
+    ...mapGetters(["userInfo"])
+  },
   methods: {
     onClickLeft() {
       this.$router.back();
     },
     handlePlayMusic(musicUrl) {
       // todo 这里调用原生播放音乐
-      alert("这里调用原生播放音乐" + musicUrl);
+      playVoice(this.userInfo.p,musicUrl);
+    },
+    getData(){
+      // todo 发送请求获取接口数据
+      this.loading = true
+      this.$http.get('/sing/record', {
+        params: {
+          page: this.page
+        }
+      }).then((res) => {
+        console.log(res.data)
+        let data = res.data
+        this.publish.list = this.publish.list.concat(data.publish.list)
+        this.participate.list = this.participate.list.concat(data.participate.list)
+        //this.pageTotal = data.pageTotal
+        this.loading = false
+        if (this.pageTotal <= this.page) {
+          this.finished = true
+        }
+      })
     }
   },
   watch: {},

@@ -154,6 +154,7 @@
 import Button from "@/components/Button";
 import ButtonPlay from "@/components/button-play";
 import Avatar from "@/components/avatar";
+import {mapGetters} from 'vuex'
 export default {
   data() {
     return {
@@ -172,6 +173,9 @@ export default {
     console.log(this.operateType);
   },
   computed: {
+    ...mapGetters({
+      'userInfo': 'userInfo'
+    }),
     type() {
       // 判断是领唱还是参加
       if (this.taskInfo.leader) {
@@ -205,13 +209,17 @@ export default {
       this.$router.back();
     },
     onClickRight() {},
-    handlePlayMusic(taskInfo) {
+    handlePlayMusic() {
       // todo 这里调用原生播放音乐
-      alert("这里调用原生播放音乐");
+      console.log(this.taskInfo);
+      playVoice(this.userInfo.p,this.taskInfo.leaderMusic);
     },
     handRecord() {
       // todo 这里调用原生录音
-      alert("这里调用原生录音");
+      console.log(this.taskInfo);
+      let obj = {act:'sing',id:this.taskInfo.taskId ? this.taskInfo.taskId : this.taskInfo.songId,type:this.taskInfo.taskId ? 'member' : 'leader'};
+      console.log(obj);
+      Voice(this.userInfo.p,this.taskInfo.lyric,JSON.stringify(obj));
     }
   },
   components: {

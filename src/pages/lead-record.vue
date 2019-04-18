@@ -16,7 +16,7 @@
           :key="i"
         >{{lyric}}</div>
         <div class="song">《{{item.songName}}》 {{item.songAuthor}}</div>
-        <span class="paly-btn"><img src="../assets/images/icon-erji.png" class="icon-erji" alt="">点击试听</span>
+        <span class="paly-btn" @click="handlePlayMusic(item.leaderMusic)"><img src="../assets/images/icon-erji.png" class="icon-erji" alt="">点击试听</span>
         <div class="play-count">播放次数：{{item.playCount}}</div>
       </div>
       <div class="no-data" v-if="!list.length">暂无领唱，快去首页领唱吧！</div>
@@ -24,6 +24,7 @@
   </div>
 </template>
 <script>
+import { mapGetters } from "vuex"
 export default {
   data() {
     return {
@@ -70,15 +71,25 @@ export default {
   created() {
     this.getData()
   },
-  computed: {},
+  computed: {
+    ...mapGetters(["userInfo"]),
+  },
   methods: {
     onClickLeft() {
       this.$router.back();
     },
     getData() {
-      this.$http.get('/api/lead-record').then((data) => {
-        console.log(data)
+      this.$http.get('/sing/leaderRecord').then((data) => {
+        console.log(data);
+        this.list = data.data;
       })
+    },
+    handlePlayMusic(url) {
+      console.log(this.userInfo)
+      // todo 这里调用原生播放音乐
+      console.log(url)
+      playVoice(this.userInfo.p,url);
+      //alert("这里调用原生播放音乐");
     }
   },
   watch: {},

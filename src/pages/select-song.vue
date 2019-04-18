@@ -58,6 +58,7 @@ const songJson = {
   songAuthor: '陈雪凝',
   lyricList: ['说不痛苦那是假的，毕竟我的心也是肉做的', '你离开时我心里的彩虹，就变成灰色'],
   songId: 1,
+  leaderMusic: '',
   leader: { // 领唱人
     avatarUrl: require('../assets/images/avatar.png'),
     nickName: '小郑',

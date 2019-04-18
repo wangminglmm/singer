@@ -1,4 +1,4 @@
-
+import { Toast } from 'vant';
 //显示我的界面
 function showMyHome(device){
 	if(device == 'ios'){
@@ -67,9 +67,26 @@ function showPlayVoice_ios(voice_url){
 
 }
 
+function fromandroidrun(json){
+	voiceCallback(json);
+}
+
+function fromiosrun(json){
+	voiceCallback(json);
+}
+
+function voiceCallback(json){
+	if(json['type'] == "pp://voice"){
+			json.voice = JSON.parse(json.voice);
+			Toast(json.voice.msg);
+	}
+}
+
 export function initJsBridge() {
   window.showMyHome = showMyHome
 	window.to_personal = to_personal
 	window.Voice = Voice
-  window.playVoice = playVoice
+	window.playVoice = playVoice
+	window.fromiosrun = fromiosrun
+	window.fromandroidrun = fromandroidrun
 }

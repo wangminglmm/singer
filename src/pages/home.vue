@@ -46,13 +46,14 @@
         <div class="close" @click="showRule=false"><img src="../assets/images/icon-close.png" alt=""></div>
       </div>
     </van-popup>
+    <img src="../assets/images/shuaxin.png" class="reload" id="reload" @click="handReLoad">
   </div>
 </template>
 <script>
 import Button from '@/components/Button'
 import HomeListItem from '@/components/home-list-item'
 import {res} from '@/mock/home'
-console.log(res)
+import {mapGetters} from 'vuex';
 export default {
   data() {
     return {
@@ -77,6 +78,9 @@ export default {
   beforeDestory() {
     clearTimeout(this.timer)
   },
+  computed: {
+    ...mapGetters(["userInfo"])
+  },
   methods: {
     getData() {
       // todo 发送请求获取接口数据
@@ -88,6 +92,7 @@ export default {
       }).then((res) => {
         console.log(res.data)
         let data = res.data
+        this.userInfo.sex = data.userInfo.sex;
         this.list = this.list.concat(data.list)
         this.pageTotal = data.pageTotal
         this.loading = false
@@ -101,7 +106,7 @@ export default {
       this.getData()
     },
     onClickLeft() {
-
+      showMyHome(this.userInfo.p);
     },
     onClickRight() {
       this.$router.push({
@@ -123,6 +128,12 @@ export default {
       this.$router.push({
         path: '/lead-record'
       })
+    },
+    handReLoad() {
+      this.page = 1
+      this.pageTotal = 0
+      this.list = []
+      this.getData()
     }
   },
   components: {
@@ -209,12 +220,22 @@ export default {
     bottom: torem(-100);
     margin-left: torem(-27);
   }
+  
 }
 </style>
 <style>
 .container .van-popup {
   background-color: transparent;
   overflow-y: inherit;
+}
+.reload {
+  position: fixed;
+  width: 3.24rem;
+  height: 3.24rem;
+  right: 0.2rem;
+  bottom: 5.9rem;
+  background-size: cover;
+  z-index:999;
 }
 </style>
 

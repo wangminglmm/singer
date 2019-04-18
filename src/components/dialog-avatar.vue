@@ -4,15 +4,17 @@
       <img :src="imgUrl" alt="" class="img">
       <p class="nick-name">{{nickName}}</p>
       <div class="operate">
+        <!--
         <div class="operate-item">
           <img src="../assets/images/icon-gift.png" class="btn-img" alt="">
           <div class="btn-name">送礼物</div>
         </div>
+        -->
         <div class="operate-item" @click="handleToPersonal">
           <img src="../assets/images/icon-home.png" class="btn-img" alt="">
           <div class="btn-name">去TA主页</div>
         </div>
-        <div class="operate-item">
+        <div class="operate-item" @click="forbid">
           <img src="../assets/images/icon-disabled.png" class="btn-img" alt="">
           <div class="btn-name">禁止参加</div>
         </div>
@@ -46,6 +48,11 @@ export default {
     },
     handleToPersonal() {
       window.to_personal(this.userInfo.p, this.uid)
+    },
+    forbid(){
+      this.$http.get('/sing/forbid?uid='+this.uid).then((res) => {
+        console.log(res);
+      });
     }
   }
 }

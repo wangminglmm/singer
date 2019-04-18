@@ -86,12 +86,13 @@ export default {
   .input{
     display: block;
     margin: torem(0) torem(65) torem(73);
-    width: torem(1);
-    height: torem(1);
+    width: 1px;
+    height: 1px;
     text-indent: -999em;
     opacity: 0;
     color: transparent;
     background-color: transparent;
+    margin-left: -100vw;
   }
   .input-label{
     height: torem(72);
@@ -99,18 +100,20 @@ export default {
     display: block;
     margin: torem(0) torem(65) torem(73);
     margin-top: torem(-72);
+    overflow: hidden;
   }
   .number-list{
     height: torem(72);
     line-height: torem(72);
     text-align: center;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     .number{
       width: torem(80);
       height: 100%;
       border-radius: torem(16);
       background-color: #fff;
+      margin: 0 torem(20);
     }
   }
   .sure-btn{
@@ -132,5 +135,4 @@ export default {
   background-color: transparent !important;
 }
 </style>
-
 
