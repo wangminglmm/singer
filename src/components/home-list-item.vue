@@ -37,7 +37,7 @@
         :key="index"
       >{{item}}</div>
       <div class="song">《{{taskInfo.songName}}》 {{taskInfo.songAuthor}}
-        <button-play @click="handlePlayMusic"></button-play>
+        <button-play :musicUrl="taskInfo.leaderMusic" @click="handlePlayMusic"></button-play>
       </div>
     </div>
     <div
@@ -82,7 +82,7 @@ export default {
     ...mapGetters(["userInfo"]),
     buttonText() {
       let info = this.taskInfo;
-      if (info.remainTime <= 0) {
+      if (info.remainTime <= 0 || info.remainGold == 0) {
         return "已结束";
       }
       if (info.allowSex != 2 && info.allowSex != this.userInfo.sex) {
@@ -102,19 +102,21 @@ export default {
   methods: {
     handleJoin() {
       if (this.disabled) {
+        return;
         return this.$toast("条件不符合，请换一个试试吧！");
       }
       let taskId = this.taskInfo.taskId;
       this.$http.get('/sing/checkJoin?id='+taskId).then((res) => {
         if(res.error_code != 0){
           return this.$toast(res.msg);
+        }else{
+          if (this.taskInfo.needsPassword) {
+            this.$refs.dialogPassword.show();
+          } else {
+            this.toJoin();
+          }
         }
       })
-      if (this.taskInfo.needsPassword) {
-        this.$refs.dialogPassword.show();
-      } else {
-        this.toJoin();
-      }
     },
     handlePlayMusic(taskInfo) {
       // todo 这里调用原生播放音乐

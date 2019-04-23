@@ -1,4 +1,4 @@
-import { Toast } from 'vant';
+//import { Toast } from 'vant';
 //显示我的界面
 function showMyHome(device){
 	if(device == 'ios'){
@@ -78,7 +78,8 @@ function fromiosrun(json){
 function voiceCallback(json){
 	if(json['type'] == "pp://voice"){
 			json.voice = JSON.parse(json.voice);
-			Toast(json.voice.msg);
+			//Toast(json.voice.msg);
+			window.voiceCall(json.voice);
 	}
 }
 

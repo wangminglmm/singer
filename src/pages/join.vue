@@ -59,6 +59,7 @@
             >{{item}}</div>
             <div class="song">《{{taskInfo.songName}}》 {{taskInfo.songAuthor}}
               <button-play
+				:musicUrl="taskInfo.leaderMusic"
                 class="play-btn"
                 color="#ff7a56"
                 @click="handlePlayMusic"
@@ -80,6 +81,7 @@
               >{{item}}</div>
               <div class="song">《{{taskInfo.songName}}》 {{taskInfo.songAuthor}}
                 <button-play
+				  :musicUrl="taskInfo.leaderMusic"
                   class="play-btn"
                   color="#ff7a56"
                   text="原唱"
@@ -112,6 +114,7 @@
               >{{item}}</div>
               <div class="song">《{{taskInfo.songName}}》 {{taskInfo.songAuthor}}
                 <button-play
+				  :musicUrl="taskInfo.leaderMusic"
                   class="play-btn"
                   color="#ff7a56"
                   @click="handlePlayMusic"
@@ -148,22 +151,34 @@
           ></div>
       </div>
     </van-popup>
+    <van-popup
+      overlay-class="popup-rule"
+      v-model="showResult"
+    >
+    <div class="result-img">
+      <img :src="resultImg" alt="">
+    </div>
+    </van-popup>
   </div>
 </template>
 <script>
 import Button from "@/components/Button";
 import ButtonPlay from "@/components/button-play";
 import Avatar from "@/components/avatar";
+import DialogJoin from "@/components/dialog-join";
 import {mapGetters} from 'vuex'
 export default {
   data() {
     return {
       title: "",
       showRule: false,
+      showResult: false,
       info: {
         imgUrl: require("../assets/images/avatar.png")
       },
-      taskInfo: {}
+      taskInfo: {},
+      resultImg:require('../assets/images/fail.png'),
+      start: false,
     };
   },
   created() {
@@ -216,16 +231,49 @@ export default {
     },
     handRecord() {
       // todo 这里调用原生录音
-      console.log(this.taskInfo);
-      let obj = {act:'sing',id:this.taskInfo.taskId ? this.taskInfo.taskId : this.taskInfo.songId,type:this.taskInfo.taskId ? 'member' : 'leader'};
-      console.log(obj);
-      Voice(this.userInfo.p,this.taskInfo.lyric,JSON.stringify(obj));
+      if(true || this.start == false){
+        console.log(this.taskInfo);
+        let obj = {act:'sing',id:this.taskInfo.taskId ? this.taskInfo.taskId : this.taskInfo.songId,type:this.taskInfo.taskId ? 'member' : 'leader'};
+        console.log(obj);
+        this.start = true;
+        setTimeout(() => {
+          this.start = true;
+        },3000)
+        Voice(this.userInfo.p,this.taskInfo.lyric,JSON.stringify(obj));
+      }
+    },
+    voiceCall(res){
+      if(this.taskInfo.taskId){ // 参与
+        if(res.error_code == 0){
+          this.resultImg = require('../assets/images/success.png')
+          this.showResult = true;
+        }else if(res.error_code == 1){
+          this.resultImg = require('../assets/images/fail.png')
+          this.showResult = true;
+        }else{
+          this.$toast(res.msg);
+        }
+        setTimeout(() => {
+          this.$router.push({
+            path: '/'
+          })
+        },2500);
+        
+      }else{ // 领唱
+        this.$toast(res.msg);
+      }
+    }
+  },
+  mounted() {
+    window['voiceCall'] = res => {
+      this.voiceCall(res);
     }
   },
   components: {
     Button,
     Avatar,
-    ButtonPlay
+    ButtonPlay,
+    DialogJoin
   }
 };
 </script>
@@ -473,6 +521,9 @@ export default {
 .container .van-popup {
   background-color: transparent;
   overflow-y: inherit;
+}
+.result-img {
+    width:22rem;
 }
 </style>
 

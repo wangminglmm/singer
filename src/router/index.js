@@ -7,6 +7,7 @@ const SelectSong = () => import('@/pages/select-song')
 const SearchSong = () => import('@/pages/search-song')
 const LeadRecord = () => import('@/pages/lead-record')
 const RewardRecord = () => import('@/pages/reward-record')
+const BlackList = () => import('@/pages/black-list')
 Vue.use(Router)
 
 export default new Router({
@@ -45,6 +46,11 @@ export default new Router({
       path: '/reward-record',
       name: 'RewardRecord',
       component: RewardRecord
+    },
+    {
+      path: '/black-list',
+      name: 'BlackList',
+      component: BlackList
     }
   ]
 })

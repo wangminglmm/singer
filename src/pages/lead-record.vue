@@ -16,8 +16,11 @@
           :key="i"
         >{{lyric}}</div>
         <div class="song">《{{item.songName}}》 {{item.songAuthor}}</div>
-        <span class="paly-btn" @click="handlePlayMusic(item.leaderMusic)"><img src="../assets/images/icon-erji.png" class="icon-erji" alt="">点击试听</span>
-        <div class="play-count">播放次数：{{item.playCount}}</div>
+        <span class="paly-btn" @click="handlePlayMusic(item.leaderMusic)"><img src="../assets/images/icon-erji.png" class="icon-erji" alt="">点击试听
+        <audio :src="item.leaderMusic" :ref="item.leaderMusic" controls="" @ended="end()" class="hide"></audio>
+        </span>
+        
+        <!--<div class="play-count">播放次数：{{item.playCount}}</div>-->
       </div>
       <div class="no-data" v-if="!list.length">暂无领唱，快去首页领唱吧！</div>
     </div>
@@ -84,11 +87,46 @@ export default {
         this.list = data.data;
       })
     },
+    start(url) {
+      let aud = this.$refs[url][0]
+      if(aud.paused){
+        aud.play()
+        //this.icon = 'stop-circle-o'
+      }else{
+        aud.pause()
+        //this.icon = 'play-circle-o';
+      }
+    },
+    end() {
+      //this.icon = 'play-circle-o';
+    },
     handlePlayMusic(url) {
       console.log(this.userInfo)
       // todo 这里调用原生播放音乐
       console.log(url)
-      playVoice(this.userInfo.p,url);
+
+      if(this.userInfo.p == 'ios'){
+        if(url.indexOf('.amr') != -1){
+          var that = this;
+          this.$http.get('/sing/getMp3Link?link='+url).then((res) => {
+            if(res.error_code == 0){
+              that.link = res.data.link;
+              setTimeout(()=>{
+                that.start(url);
+              },2000);
+              
+            }else{
+              this.$toast(res.msg);
+            }
+          });
+        }else{
+          setTimeout(()=>{
+            this.start(url);
+          },200)
+        }
+      }else{
+        playVoice(this.userInfo.p,url);
+      }
       //alert("这里调用原生播放音乐");
     }
   },

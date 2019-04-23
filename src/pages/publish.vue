@@ -137,6 +137,18 @@ export default {
   },
   created() {
     this.tabModel = (this.currentPublishType === 'public' ? 1 : 2)
+    console.log(this.userInfo)
+    let _sex = this.userInfo.sex == 1 ? 0 : 1;
+    this.savePublishFrom({
+      publicForm:{
+        ...this.publicForm,
+        sex:_sex,
+      },
+      privateForm:{
+        ...this.privateForm,
+        sex:_sex
+        }
+    })
   },
   computed: {
     ...mapGetters({
@@ -146,7 +158,8 @@ export default {
       'currentPublishType': 'currentPublishType',
       'publishPasswrod': 'publishPasswrod',
       'publicForm': 'publicForm',
-      'privateForm': 'privateForm'
+      'privateForm': 'privateForm',
+      'userInfo': 'userInfo',
     }),
     postFormData() {
       if (this.currentPublishType === 'public') {

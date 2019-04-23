@@ -5,6 +5,8 @@
       left-text=""
       left-arrow
       @click-left="onClickLeft"
+      right-text="黑名单"
+      @click-right="onClickRight"
     />
     <div class="tabs">
       <div class="tab-nav">
@@ -67,7 +69,7 @@
                   :key="i"
                 >{{lyric}}</div>
                 <div class="song">《{{item.songName}}》 {{item.songAuthor}}
-                  <button-play @click="handlePlayMusic(item.leaderMusic)"></button-play>
+                  <button-play :musicUrl="item.leaderMusic" @click="handlePlayMusic(item.leaderMusic)"></button-play>
                 </div>
               </div>
               <div class="joiner-list">
@@ -82,7 +84,7 @@
                     :nickName="joiner.nickName" />
                   <div class="joiner-detail">
                     <div class="nick-name">{{joiner.nickName}}</div>
-                    <button-play
+                    <button-play :musicUrl="joiner.musicUrl"
                       @click="handlePlayMusic(joiner.musicUrl)"
                       text="播放"
                       class="btn"
@@ -158,7 +160,7 @@
                     :key="i"
                   >{{lyric}}</div>
                   <div class="song">《{{item.songName}}》 {{item.songAuthor}}
-                    <button-play @click="handlePlayMusic(item.leaderMusic)"></button-play>
+                    <button-play :musicUrl="item.leaderMusic" @click="handlePlayMusic(item.leaderMusic)"></button-play>
                   </div>
                 </div>
                 <div class="joiner-list">
@@ -173,7 +175,7 @@
                     :nickName="joiner.nickName" />
                     <div class="joiner-detail">
                       <div class="nick-name">{{joiner.nickName}}</div>
-                      <button-play
+                      <button-play :musicUrl="joiner.musicUrl" v-if="joiner.uid == userInfo.uid"
                         @click="handlePlayMusic(joiner.musicUrl)"
                         text="播放"
                         class="btn"
@@ -223,15 +225,20 @@ export default {
       }
     };
   },
-  created() {
+  created() {console.log(this.userInfo);
     this.getData()
   },
   computed: {
-    ...mapGetters(["userInfo"])
+    ...mapGetters(["userInfo"]) 
   },
   methods: {
     onClickLeft() {
       this.$router.back();
+    },
+    onClickRight() {
+      this.$router.push({
+        path: '/black-list'
+      })
     },
     handlePlayMusic(musicUrl) {
       // todo 这里调用原生播放音乐

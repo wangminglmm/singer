@@ -1,17 +1,22 @@
 <template>
   <div class="container">
-    <van-nav-bar
+    <van-nav-bar v-if="userInfo.head"
       title="我赏你唱"
-      left-text=""
+      left-text=''
       right-text="打赏记录"
       left-arrow
       @click-left="onClickLeft"
       @click-right="onClickRight"
     />
+    <van-nav-bar v-else
+      title="我赏你唱"
+      right-text="打赏记录"
+      @click-right="onClickRight"
+    />
     <section class="banner">
       <img src="../assets/images/banner.jpg" alt="">
-      <div class="button-operate">
-        <Button type="lead-singer" @click="handleToSelectSong">我要领唱</Button>
+      <div :class="leader ? 'button-operate-leader' : 'button-operate'">
+        <Button v-if="leader" type="lead-singer" @click="handleToSelectSong">我要领唱</Button>
         <Button type="publish" @click="handlePublish">我要发布</Button>
       </div>
       <div class="btn-rule" @click="showRule=true">活动规则</div>
@@ -32,7 +37,7 @@
         ></home-list-item>
       </section>
     </van-list>
-    <div class="circle-button" @click="handToLeadRecord">我的领唱</div>
+    <div v-if="leader" class="circle-button" @click="handToLeadRecord">我的领唱</div>
     <van-popup
       overlay-class="popup-rule"
       v-model="showRule"
@@ -63,9 +68,11 @@ export default {
       finished: false,
       page: 1,
       pageTotal: 0,
+      leader: false
     }
   },
   created() {
+    console.log(this.userInfo);
     this.getData()
   },
   mounted() {
@@ -93,9 +100,14 @@ export default {
         console.log(res.data)
         let data = res.data
         this.userInfo.sex = data.userInfo.sex;
+        this.userInfo.uid = data.userInfo.uid;
+        this.userInfo.nick = data.userInfo.nick;
         this.list = this.list.concat(data.list)
         this.pageTotal = data.pageTotal
         this.loading = false
+        if(data.leader){
+          this.leader = data.leader
+        }
         if (this.pageTotal <= this.page) {
           this.finished = true
         }
@@ -147,6 +159,14 @@ export default {
 .banner{
   position: relative;
   .button-operate{
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    left: 69%;
+    bottom: torem(174);
+    margin-left: torem(-426);
+  }
+  .button-operate-leader{
     position: absolute;
     display: flex;
     justify-content: space-between;
@@ -203,7 +223,7 @@ export default {
   box-shadow: 0px torem(14) torem(10) 0px rgba(85, 65, 162, 0.4),inset 0px torem(23) torem(62) 0px rgba(255, 255, 255, 0.24);
   box-sizing: border-box;
   padding: 0 torem(40) torem(100);
-  font-size: torem(30);
+  font-size: torem(40);
   color: #fff;
   position: relative;
   margin: 0 auto;

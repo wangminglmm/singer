@@ -51,7 +51,7 @@ export default {
     },
     forbid(){
       this.$http.get('/sing/forbid?uid='+this.uid).then((res) => {
-        console.log(res);
+        this.$toast(res.msg);
       });
     }
   }
